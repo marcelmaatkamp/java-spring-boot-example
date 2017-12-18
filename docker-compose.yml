@@ -1,0 +1,109 @@
+version: '2'
+
+services:
+
+  proxy:
+    image: vimagick/dante
+    restart: always
+    ports:
+      - "127.0.0.1:1080:1080"
+    logging:
+      options:
+        max-size: 50m
+
+  elasticsearch-master:
+    image: "elasticsearch:2"
+    restart: always
+    command: "elasticsearch -Des.cluster.name='graylog'"
+    volumes:
+      - graylog-master-data:/usr/share/elasticsearch/data
+    environment:
+      - MAX_OPEN_FILES=65535
+      - MAX_LOCKED_MEMORY=unlimited
+      - ES_JAVA_OPTS=-server
+    logging:
+      options:
+        max-size: 50m
+
+  elasticsearch-node01:
+    image: marcelmaatkamp/alpine-elasticsearch
+    restart: always
+    command: --Ecluster.name=graylog --Enode.name=elasticsearch-node01 --Ediscovery.zen.ping.unicast.hosts=master:9300 --Enetwork.host=elasticsearch-node01 --Ees.network.bind_host=elasticsearch-node01
+    hostname: elasticsearch-node01
+    links:
+      - "elasticsearch-master:master"
+    volumes:
+      - elastic-data:/usr/share/elasticsearch/data
+    environment:
+      - MAX_OPEN_FILES=65535
+      - MAX_LOCKED_MEMORY=unlimited
+      - ES_JAVA_OPTS=-server
+    logging:
+      options:
+        max-size: 50m
+
+  mongodb:
+    image: mongo:3
+    restart: always
+    command: "mongod --smallfiles"
+    volumes:
+      - mongodb-conf:/etc/mongod.conf:ro
+      - mongodb-data:/data/db
+    logging:
+      options:
+        max-size: 50m
+
+  graylog:
+    image: "graylog2/server"
+    hostname: graylog
+    restart: always
+    volumes:
+      - graylog-data:/usr/share/graylog/data/journal
+      - graylog-conf:/usr/share/graylog/data/config
+    environment:
+      GRAYLOG_PASSWORD_SECRET: somepasswordpepper
+      GRAYLOG_ROOT_PASSWORD_SHA2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+      GRAYLOG_WEB_ENDPOINT_URI: /api
+      GRAYLOG_ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    links:
+      - mongodb:mongo
+      - elasticsearch-master:elasticsearch
+    logging:
+      options:
+        max-size: 50m
+
+  rabbitmq:
+    image: marcelmaatkamp/rabbitmq-mqtt-ldap
+    restart: always
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_NODENAME: rabbitmq@rabbitmq
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq/mnesia
+    logging:
+      options:
+        max-size: 50m
+
+  producer:
+    image: nexus:5000/java/spring-boot-example:1.0
+    environment:
+     - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+     - spring.main.web-environment=false
+     - spring.profiles.active=test
+     - endpoints.jmx.enabled=true
+     - spring.application.admin.jmx-port=1099
+    ports:
+     - 5005:5005
+     - 1099:1099
+    logging:
+      options:
+        max-size: 50m
+ 
+volumes:
+  rabbitmq:
+  mongodb-data:
+  mongodb-conf:
+  graylog-data:
+  graylog-master-data:
+  graylog-conf:
+  elastic-data: 

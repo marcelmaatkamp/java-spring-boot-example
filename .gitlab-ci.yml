@@ -1,0 +1,32 @@
+image: greup2.pirod.nl:5000/raptor/gradle-jdk:jdk8
+
+stages:
+ - build
+ - test
+ - deploy
+
+before_script:
+ - export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  script:
+    - gradle assemble
+
+test:
+  stage: test
+  script:
+    - gradle check
+       
+deploy:
+  stage: deploy
+  script:
+    - gradle dockerPushImage
+
+after_script:
+  - echo "End CI"
