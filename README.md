@@ -4,15 +4,18 @@
 
 ```
 $ docker-compose up -d proxy nodepki
+$ $ docker-compose run nodepki ash -c \
+    "cd /root/nodepki && node /root/nodepki/nodepkictl.js useradd --username admin --password admin"
+
 ```
 
 Steps:
 
  * Install a proxy switcher
  * Set proxy url to socks5://localhost:1080
- * Goto https://nodepki, 
- * install the newly gegerated Root Certificate 
- * Generate and install the following servers
+ * Goto http://nodepki and login with `username=admin` and `password=admin`
+ * Goto http://nodepki:5000/cacerts and install the newly gegerated `Root Certificate` 
+ * http://nodepki:5000/request and install the following servers with the `Common name`
    * nexus
    * rabbitmq
    * graylog
