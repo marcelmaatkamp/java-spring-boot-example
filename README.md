@@ -1,27 +1,20 @@
-# "I want to fix a bug!!!"
-
-```
-$ git clone \
- cd producer-xml &&\
- docker-compose up -d proxy rabbitmq graylog2 &&\
- gradle dockerBuildImage &&\
- docker-compose up producer
-```
-
-and attach a debugger on port 5005 (see docker-compose.yml, JAVA_OPTS)
-
-
 # Installation
 
-## Root certificate
-
-Install the root certificate to trust https://nodepki
-
-## Mount data diode
+## Generate and install a new Root Certificate
 
 ```
-smb://diunt/blackDropbox
+$ docker-compose up -d proxy nodepki
 ```
+
+Steps:
+
+ * Install a proxy switcher
+ * Set proxy url to socks5://localhost:1080
+ * Goto https://nodepki, 
+ * install the newly gegerated Root Certificate 
+ * Generate and install the following servers
+   * nexus
+   * rabbitmq
 
 ## Git clone project 
 
@@ -75,3 +68,14 @@ $ docker-compose up -d proxy graylog rabbitmq
 $ docker-compose up producer
 ```
 
+# "I want to fix a bug!!!"
+
+```
+$ git clone \
+ cd producer-xml &&\
+ docker-compose up -d proxy rabbitmq graylog2 &&\
+ gradle dockerBuildImage &&\
+ docker-compose up producer
+```
+
+and attach a debugger on port 5005 (see docker-compose.yml, JAVA_OPTS)
