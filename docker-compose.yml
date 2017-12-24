@@ -11,6 +11,26 @@ services:
       options:
         max-size: 50m
 
+  nodepki:
+    mage: adito/nodepki-docker
+    ports:
+      - 5001:5000
+    volumes:
+      - nodepki-certs-nexus:/certs/nexus
+      - nodepki-certs-rabbitmq:/certs/rabbitmq
+      - nodepki-certs-graylog:/certs/graylog
+      - nodepki-data:/root/nodepki/data
+      - nodepki-data:/root/nodepki-client/data
+      - nodepki-data:/root/nodepki-webclient/data
+      - ./docker-nodepki/applications/nodepki/data/config:/root/nodepki/data/config
+      - ./docker-nodepki/applications/nodepki-client/data/config:/root/nodepki-client/data/config
+      - ./docker-nodepki/applications/nodepki-webclient/data/config:/root/nodepki-webclient/data/config
+      - ./docker-nodepki/applications/nodepki-webclient/api/webclient/controllers/request.js:/root/nodepki-webclient/controllers/request.js
+      - ./conf/http_server.conf:/etc/supervisor/conf.d/http_server.conf
+    environment:
+      - API_USERNAME=${API_USERNAME}
+      - API_PASSWORD=${API_PASSWORD}
+
   elasticsearch-master:
     image: "elasticsearch:2"
     restart: always
@@ -107,3 +127,10 @@ volumes:
   graylog-master-data:
   graylog-conf:
   elastic-data: 
+
+  nodepki-data:
+  nodepki-certs-nexus:
+  nodepki-certs-rabbitmq:
+  nodepki-certs-graylog:
+  
+ 
