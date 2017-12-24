@@ -15,6 +15,7 @@ Steps:
  * Generate and install the following servers
    * nexus
    * rabbitmq
+   * graylog
 
 ## Git clone project 
 
