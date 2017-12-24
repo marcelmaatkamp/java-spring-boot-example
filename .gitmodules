@@ -1,0 +1,3 @@
+[submodule "docker-nodepki"]
+	path = docker-nodepki
+	url = https://github.com/marcelmaatkamp/docker-nodepki.git
