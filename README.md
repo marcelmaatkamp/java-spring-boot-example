@@ -69,6 +69,29 @@ $ docker-compose up -d gitlab
 
 Goto https://gitlab, set admin password for user `root` and login 
 
+## Nexus
+
+```
+$ openssl x509 -in root.pem -inform PEM -out root.crt && cp root.crt /usr/local/share/ca-certificates && update-ca-certificates
+$ docker-compose run nodepki ash -c 'cd /certs/nexus &&\
+   openssl x509 -in root.pem -inform PEM -out root.crt &&\ 
+   cp root.crt /usr/local/share/ca-certificates &&\
+   update-ca-certificates &&\
+   openssl pkcs12 -export -in signed.crt -inkey domain.key -chain -CAfile cacert.crt -name nexus -out nexus.p12'
+
+And use password `password`
+
+$ docker-compose run nexus ash -c 'cd /nexus-data &&\
+   keytool -importkeystore -deststorepass password -destkeystore /nexus-data/keystore.jks -srckeystore nexus.p12 -srcstoretype PKCS12'
+```
+
+If succceeded: 
+
+```
+Enter source keystore password:  
+Entry for alias nexus successfully imported.
+Import command completed: `1 entries successfully imported`, 0 entries failed or cancelled
+```
 
 ## Git clone project 
 
