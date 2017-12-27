@@ -90,7 +90,13 @@ If succceeded:
 ```
 Enter source keystore password:  
 Entry for alias nexus successfully imported.
-Import command completed: `1 entries successfully imported`, 0 entries failed or cancelled
+Import command completed: 1 entries successfully imported, 0 entries failed or cancelled
+```
+
+Start Nexus:
+
+```
+$ docker-compose up -d nexus
 ```
 
 ## Git clone project 
