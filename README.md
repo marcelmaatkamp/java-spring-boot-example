@@ -18,22 +18,39 @@ Installs the following servers:
 
 # Installation
 
-## Generate and install a new Root Certificate
+## Proxy
+
+```
+$ docker-compose up -d proxy
+```
+
+ * Install a proxy switcher
+ * Set proxy url to socks5://localhost:1080
+
+## NodePKI
 
 ```
 $ docker-compose up -d proxy nodepki
 $ docker-compose run nodepki ash -c \
     "cd /root/nodepki && node /root/nodepki/nodepkictl.js useradd --username admin --password admin"
-
 ```
 
-After that:
+Goto http://nodepki and login with `username=admin` and `password=admin`
 
- * Install a proxy switcher
- * Set proxy url to socks5://localhost:1080
- * Goto http://nodepki and login with `username=admin` and `password=admin`
- * Goto http://nodepki:5000/cacerts and install the newly gegerated `Root Certificate` 
- * http://nodepki:5000/request and install the following servers with the `Common name`
+### Generate a new root certificate
+
+Goto http://nodepki:5000/cacerts and install the newly gegerated `Root Certificate` 
+
+[[screenshot nodepki root certs]]
+
+### Install a new root certificate
+
+[[screenshot keychain mac]
+
+### Generate new server certificates
+
+Goto http://nodepki:5000/request and install the following servers with the `Common name`
+
    * gitlab
    * nexus
    * rabbitmq
