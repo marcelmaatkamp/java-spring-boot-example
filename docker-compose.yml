@@ -32,6 +32,9 @@ services:
     environment:
       - API_USERNAME=${API_USERNAME}
       - API_PASSWORD=${API_PASSWORD}
+    logging:
+      options:
+        max-size: 50m
 
   nexus:
     image: clearent/nexus:latest
@@ -45,6 +48,9 @@ services:
       - 443:8443
       - 8081:8081
       - 5000:5000
+    logging:
+      options:
+        max-size: 50m
 
   elasticsearch-master:
     image: "elasticsearch:2"
