@@ -13,8 +13,6 @@ services:
 
   nodepki:
     image: adito/nodepki-docker
-    ports:
-      - 5001:5000
     volumes:
       - nodepki-certs-nexus:/certs/nexus
       - nodepki-certs-rabbitmq:/certs/rabbitmq
