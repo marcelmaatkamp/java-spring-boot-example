@@ -37,17 +37,17 @@ $ docker-compose run nodepki ash -c \
 
 Goto http://nodepki and login with `username=admin` and `password=admin`
 
-### Generate a new root certificate
+### Generate a new `root certificate`
 
 Goto http://nodepki:5000/cacerts and install the newly gegerated `Root Certificate` 
 
 [[screenshot nodepki root certs]]
 
-### Install a new root certificate
+### Install and trust the new `root certificate` in keychain (mac)
 
 [[screenshot keychain mac]
 
-### Generate new server certificates
+### Generate new `server certificates`
 
 Goto http://nodepki:5000/request and install the following servers with the `Common name`
 
