@@ -1,3 +1,9 @@
+# WIP WIP WIP 
+
+# TODO 
+ * java part out of this repo and into its own and use git submodule
+ * build and run in seperate processes
+
 # Installation
 
 ## Generate and install a new Root Certificate

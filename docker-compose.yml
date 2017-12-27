@@ -12,13 +12,15 @@ services:
         max-size: 50m
 
   nodepki:
-    mage: adito/nodepki-docker
+    image: adito/nodepki-docker
     ports:
       - 5001:5000
     volumes:
       - nodepki-certs-nexus:/certs/nexus
       - nodepki-certs-rabbitmq:/certs/rabbitmq
       - nodepki-certs-graylog:/certs/graylog
+      - nodepki-certs-gitlab:/certs/gitlab
+
       - nodepki-data:/root/nodepki/data
       - nodepki-data:/root/nodepki-client/data
       - nodepki-data:/root/nodepki-webclient/data
@@ -30,6 +32,19 @@ services:
     environment:
       - API_USERNAME=${API_USERNAME}
       - API_PASSWORD=${API_PASSWORD}
+
+  nexus:
+    image: clearent/nexus:latest
+    restart: always
+    volumes:
+      - nodepki-certs-nexus:${NEXUS_DATA}
+      - ./etc/nexus.properties:/opt/sonatype/sonatype-work/nexus3/etc/nexus.properties
+    environment:
+      - JKS_PASSWORD=${JKS_PASSWORD}
+    ports:
+      - 443:8443
+      - 8081:8081
+      - 5000:5000
 
   elasticsearch-master:
     image: "elasticsearch:2"
@@ -104,6 +119,21 @@ services:
       options:
         max-size: 50m
 
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab'
+    volumes:
+      - 'gitlab-log:/var/log/gitlab'
+      - 'gitlab-data:/var/opt/gitlab'
+      - nodepki-certs-gitlab:/etc/gitlab/ssl
+      - ./trusted:/etc/gitlab/trusted-certs
+    logging:
+      options:
+        max-size: 50m
+
   producer:
     image: nexus:5000/java/spring-boot-example:1.0
     environment:
@@ -128,9 +158,12 @@ volumes:
   graylog-conf:
   elastic-data: 
 
+  gitlab-log:
+  gitlab-data:
+
   nodepki-data:
   nodepki-certs-nexus:
   nodepki-certs-rabbitmq:
   nodepki-certs-graylog:
-  
+  nodepki-certs-gitlab: 
  
