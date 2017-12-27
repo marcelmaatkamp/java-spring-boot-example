@@ -1,5 +1,15 @@
 # WIP WIP WIP 
 
+Uses NodePKI to generate SSL certificates for servers and configures servers to use them. 
+
+Installs
+ * Socks5 proxy
+ * NodePKI
+ * Nexus
+ * Gitlab
+ * RabbitMQ
+ * Example java application
+
 # TODO 
  * java part out of this repo and into its own and use git submodule
  * build and run in seperate processes
@@ -10,12 +20,12 @@
 
 ```
 $ docker-compose up -d proxy nodepki
-$ $ docker-compose run nodepki ash -c \
+$ docker-compose run nodepki ash -c \
     "cd /root/nodepki && node /root/nodepki/nodepkictl.js useradd --username admin --password admin"
 
 ```
 
-Steps:
+After that:
 
  * Install a proxy switcher
  * Set proxy url to socks5://localhost:1080
@@ -25,6 +35,17 @@ Steps:
    * nexus
    * rabbitmq
    * graylog
+
+## Gitlab
+
+```
+$ docker-compose run gitlab ash -c \
+    "cd /etc/gitlab/ssl && ln -s domain.key gitlab.key && ln -s cacert.crt gitlab.crt"
+$ docker-compose up -d gitlab
+```
+
+Goto https://gitlab
+
 
 ## Git clone project 
 
