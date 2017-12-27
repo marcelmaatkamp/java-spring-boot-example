@@ -32,6 +32,7 @@ After that:
  * Goto http://nodepki and login with `username=admin` and `password=admin`
  * Goto http://nodepki:5000/cacerts and install the newly gegerated `Root Certificate` 
  * http://nodepki:5000/request and install the following servers with the `Common name`
+   * gitlab
    * nexus
    * rabbitmq
    * graylog
