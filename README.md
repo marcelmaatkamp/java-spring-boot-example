@@ -1,18 +1,20 @@
 # WIP WIP WIP 
 
-Uses NodePKI to generate SSL certificates for servers and configures servers to use them. 
+## TODO 
+ * java part out of this repo and into its own and use git submodule
+ * build and run in seperate processes
 
-Installs
+# Description 
+
+Uses NodePKI to generate SSL certificates for each server/service and preconfigures those servers to use the certificates. 
+
+Installs the following servers:
  * Socks5 proxy
  * NodePKI
  * Nexus
  * Gitlab
  * RabbitMQ
  * Example java application
-
-# TODO 
- * java part out of this repo and into its own and use git submodule
- * build and run in seperate processes
 
 # Installation
 
@@ -40,12 +42,15 @@ After that:
 ## Gitlab
 
 ```
-$ docker-compose run gitlab ash -c \
-    "cd /etc/gitlab/ssl && ln -s domain.key gitlab.key && ln -s cacert.crt gitlab.crt"
+$ docker-compose run gitlab bash -c \
+    "cd /etc/gitlab/ssl &&\ 
+     ln -s domain.key gitlab.key &&\
+     ln -s cacert.crt gitlab.crt &&\
+     cp root.pem /etc/gitlab/trusted-certs"
 $ docker-compose up -d gitlab
 ```
 
-Goto https://gitlab
+Goto https://gitlab, set admin password for user `root` and login 
 
 
 ## Git clone project 

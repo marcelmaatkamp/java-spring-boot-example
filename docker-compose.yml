@@ -129,7 +129,6 @@ services:
       - 'gitlab-log:/var/log/gitlab'
       - 'gitlab-data:/var/opt/gitlab'
       - nodepki-certs-gitlab:/etc/gitlab/ssl
-      - ./trusted:/etc/gitlab/trusted-certs
     logging:
       options:
         max-size: 50m
