@@ -6,7 +6,7 @@ services:
     image: vimagick/dante
     restart: always
     ports:
-      - "127.0.0.1:1080:1080"
+      - "1080:1080"
     logging:
       options:
         max-size: 50m
@@ -39,12 +39,11 @@ services:
     restart: always
     volumes:
       - nodepki-certs-nexus:${NEXUS_DATA}
-      - ./etc/nexus.properties:/opt/sonatype/sonatype-work/nexus3/etc/nexus.properties
+      - ./etc/nexus/nexus.properties:/opt/sonatype/sonatype-work/nexus3/etc/nexus.properties
     environment:
       - JKS_PASSWORD=${JKS_PASSWORD}
     ports:
       - 443:8443
-      - 8081:8081
       - 5000:5000
     logging:
       options:
@@ -119,6 +118,7 @@ services:
       RABBITMQ_NODENAME: rabbitmq@rabbitmq
     volumes:
       - rabbitmq:/var/lib/rabbitmq/mnesia
+      - ./etc/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
     logging:
       options:
         max-size: 50m
