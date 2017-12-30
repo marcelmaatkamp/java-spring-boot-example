@@ -138,7 +138,8 @@ services:
         max-size: 50m
 
   producer:
-    image: nexus:5000/java/spring-boot-example:1.0
+#   image: nexus:5000/java/spring-boot-example:1.0
+    build: .
     environment:
      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
      - spring.main.web-environment=false
