@@ -72,12 +72,11 @@ Goto https://gitlab, set admin password for user `root` and login
 ## Nexus
 
 ```
-$ openssl x509 -in root.pem -inform PEM -out root.crt && cp root.crt /usr/local/share/ca-certificates && update-ca-certificates
 $ docker-compose run nodepki ash -c 'cd /certs/nexus &&\
    openssl x509 -in root.pem -inform PEM -out root.crt &&\ 
    cp root.crt /usr/local/share/ca-certificates &&\
    update-ca-certificates &&\
-   openssl pkcs12 -export -in signed.crt -inkey domain.key -chain -CAfile cacert.crt -name nexus -out nexus.p12'
+   openssl pkcs12 -export -in signed.crt -inkey nexus.key -chain -CAfile nexus.crt -name nexus -out nexus.p12'
 
 And use password `password`
 
