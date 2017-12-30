@@ -98,6 +98,8 @@ Start Nexus:
 $ docker-compose up -d nexus
 ```
 
+Goto https://nexus:8443
+
 ## Git clone project 
 
 ```
