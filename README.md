@@ -100,6 +100,14 @@ $ docker-compose up -d nexus
 
 Goto https://nexus:8443
 
+## RabbitMQ
+
+```
+$ docker-compose up -d rabbitmq
+```
+
+Goto https://rabbitmq:15671
+
 ## Git clone project 
 
 ```
