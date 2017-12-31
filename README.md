@@ -80,7 +80,7 @@ $ docker-compose run nodepki ash -c 'cd /certs/nexus &&\
 
 And use password `password`
 
-$ docker-compose run nexus ash -c 'cd /nexus-data &&\
+$ docker-compose run nexus ash -c 'cd /certs/nexus &&\
    keytool -importkeystore -deststorepass password -destkeystore /nexus-data/keystore.jks -srckeystore nexus.p12 -srcstoretype PKCS12'
 ```
 

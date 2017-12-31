@@ -28,8 +28,8 @@ services:
       - ./docker-nodepki/applications/nodepki-webclient/api/webclient/controllers/request.js:/root/nodepki-webclient/controllers/request.js
       - ./conf/http_server.conf:/etc/supervisor/conf.d/http_server.conf
     environment:
-      - API_USERNAME=${API_USERNAME}
-      - API_PASSWORD=${API_PASSWORD}
+      - API_USERNAME=admin
+      - API_PASSWORD=admin
     logging:
       options:
         max-size: 50m
@@ -38,7 +38,7 @@ services:
     image: clearent/nexus:latest
     restart: always
     volumes:
-      - nodepki-certs-nexus:/certs
+      - nodepki-certs-nexus:/certs/nexus
       - nexus-data:${NEXUS_DATA}
       - ./etc/nexus/nexus.properties:/opt/sonatype/sonatype-work/nexus3/etc/nexus.properties
     environment:
@@ -151,6 +151,25 @@ services:
     logging:
       options:
         max-size: 50m
+
+  compile:
+    image: gradle/example
+    build:
+      context: .
+    command: gradle -DsocksProxyHost=docker -DsocksProxyPort=1080 build
+    volumes:
+     - gradle-cache:/home/gradle/.gradle
+     - gradle-cache:/home/gradle/build
+
+  run:
+    image: gradle/example
+    build:
+     context: .
+    command: gradle bootRun
+    volumes:
+     - gradle-cache:/home/gradle/.gradle
+     - gradle-cache:/home/gradle/build
+
  
 volumes:
   rabbitmq:
@@ -172,4 +191,6 @@ volumes:
   nodepki-certs-rabbitmq:
   nodepki-certs-graylog:
   nodepki-certs-gitlab: 
+
+  gradle-cache:
  
