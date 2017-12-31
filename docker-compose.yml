@@ -38,13 +38,11 @@ services:
     image: clearent/nexus:latest
     restart: always
     volumes:
-      - nodepki-certs-nexus:${NEXUS_DATA}
+      - nodepki-certs-nexus:/certs
+      - nexus-data:${NEXUS_DATA}
       - ./etc/nexus/nexus.properties:/opt/sonatype/sonatype-work/nexus3/etc/nexus.properties
     environment:
       - JKS_PASSWORD=${JKS_PASSWORD}
-    ports:
-      - 443:8443
-      - 5000:5000
     logging:
       options:
         max-size: 50m
@@ -156,6 +154,7 @@ services:
  
 volumes:
   rabbitmq:
+
   mongodb-data:
   mongodb-conf:
   graylog-data:
@@ -165,6 +164,8 @@ volumes:
 
   gitlab-log:
   gitlab-data:
+
+  nexus-data:
 
   nodepki-data:
   nodepki-certs-nexus:
