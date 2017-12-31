@@ -118,7 +118,8 @@ services:
       RABBITMQ_NODENAME: rabbitmq@rabbitmq
     volumes:
       - rabbitmq:/var/lib/rabbitmq/mnesia
-      - ./etc/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+      - ./etc/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.config
+      - nodepki-certs-rabbitmq:/certs/rabbitmq
     logging:
       options:
         max-size: 50m
