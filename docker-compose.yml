@@ -146,7 +146,7 @@ services:
 
   producer:
 #   image: nexus:5000/java/spring-boot-example:1.0
-    build: .
+    build: project
     environment:
      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
      - spring.main.web-environment=false
@@ -163,7 +163,7 @@ services:
   compile:
     image: gradle/example
     build:
-      context: .
+      context: project
     command: gradle -DsocksProxyHost=docker -DsocksProxyPort=1080 build
     volumes:
      - gradle-cache:/home/gradle/.gradle
@@ -172,7 +172,7 @@ services:
   run:
     image: gradle/example
     build:
-     context: .
+     context: project
     command: gradle bootRun
     volumes:
      - gradle-cache:/home/gradle/.gradle
