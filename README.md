@@ -18,6 +18,10 @@ Installs the following servers:
 
 # Installation
 
+```
+$ git clone --recurse-submodules https://github.com/marcelmaatkamp/java-spring-boot-example.git
+```
+
 ## Proxy
 
 ```
