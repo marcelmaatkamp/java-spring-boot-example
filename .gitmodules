@@ -1,3 +1,6 @@
 [submodule "docker-nodepki"]
 	path = docker-nodepki
 	url = https://github.com/marcelmaatkamp/docker-nodepki.git
+[submodule "project"]
+	path = project
+	url = https://github.com/marcelmaatkamp/java-spring-boot-example-helloworld.git
