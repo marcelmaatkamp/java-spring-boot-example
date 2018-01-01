@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @Slf4j
 @RestController
-@Component
+@Componen
 public class Application {
 
     @RabbitListener(queues = "myQueue")

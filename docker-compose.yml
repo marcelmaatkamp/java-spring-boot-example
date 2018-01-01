@@ -11,6 +11,14 @@ services:
       options:
         max-size: 50m
 
+  socks-proxy:
+    image: weaveworks/socksproxy
+    ports:
+      - 127.0.0.1:9050:8000
+    logging:
+      options:
+        max-size: 50m
+
   nodepki:
     image: adito/nodepki-docker
     volumes:

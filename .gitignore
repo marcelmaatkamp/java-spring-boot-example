@@ -30,3 +30,5 @@ crawler/
 .mule
 deps
 images/
+*.class
+.sts4-cache/
