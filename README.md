@@ -59,6 +59,7 @@ Goto http://nodepki:5000/request and install the following servers with the `Com
    * nexus
    * rabbitmq
    * graylog
+   * project
 
 ## Gitlab
 
@@ -111,6 +112,12 @@ $ docker-compose up -d rabbitmq
 ```
 
 Goto https://rabbitmq:15671
+
+## Project
+
+```
+$ docker-compose run --entrypoint ash producer -c 'sudo update-ca-certificates && sudo ln -sf /etc/ssl/certs/java/cacerts $JAVA_HOME/jre/lib/security/cacerts'
+```
 
 ## Git clone project 
 

@@ -27,10 +27,12 @@ services:
       - nodepki-certs-rabbitmq:/certs/rabbitmq
       - nodepki-certs-graylog:/certs/graylog
       - nodepki-certs-gitlab:/certs/gitlab
+      - nodepki-certs-project:/certs/project
 
       - nodepki-data:/root/nodepki/data
       - nodepki-data:/root/nodepki-client/data
       - nodepki-data:/root/nodepki-webclient/data
+
       - ./docker-nodepki/applications/nodepki/data/config:/root/nodepki/data/config
       - ./docker-nodepki/applications/nodepki-client/data/config:/root/nodepki-client/data/config
       - ./docker-nodepki/applications/nodepki-webclient/data/config:/root/nodepki-webclient/data/config
@@ -153,6 +155,8 @@ services:
      - spring.profiles.active=test
      - endpoints.jmx.enabled=true
      - spring.application.admin.jmx-port=1099
+    volumes:
+     - nodepki-certs-project:/usr/local/share/ca-certificates
     ports:
      - 5005:5005
      - 1099:1099
@@ -168,6 +172,7 @@ services:
     volumes:
      - gradle-cache:/home/gradle/.gradle
      - gradle-cache:/home/gradle/build
+     - nodepki-certs-project:/usr/local/share/ca-certificates
 
   run:
     image: gradle/example
@@ -177,6 +182,7 @@ services:
     volumes:
      - gradle-cache:/home/gradle/.gradle
      - gradle-cache:/home/gradle/build
+     - nodepki-certs-project:/usr/local/share/ca-certificates
 
  
 volumes:
@@ -199,6 +205,8 @@ volumes:
   nodepki-certs-rabbitmq:
   nodepki-certs-graylog:
   nodepki-certs-gitlab: 
+  nodepki-certs-project: 
 
   gradle-cache:
- 
+
+  
