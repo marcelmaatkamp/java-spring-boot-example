@@ -1,12 +1,12 @@
-pluginManagement {
- repositories {
-  maven {
-   url 'https://nexus:8443/repository/remote-repos/'
-  }
-  maven {
-   url 'https://nexus:8443/repository/gradle.plugins/'
-  }
- }
-}
+# pluginManagement {
+#  repositories {
+#   maven {
+#    url 'https://nexus:8443/repository/remote-repos/'
+#   }
+#   maven {
+#    url 'https://nexus:8443/repository/gradle.plugins/'
+#   }
+#  }
+# }
 
 
