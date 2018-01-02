@@ -157,6 +157,7 @@ services:
      - spring.application.admin.jmx-port=1099
     volumes:
      - nodepki-certs-project:/usr/local/share/ca-certificates
+     - ca-certificates:/usr/share/ca-certificates
     ports:
      - 5005:5005
      - 1099:1099
@@ -173,6 +174,7 @@ services:
      - gradle-cache:/home/gradle/.gradle
      - gradle-cache:/home/gradle/build
      - nodepki-certs-project:/usr/local/share/ca-certificates
+     - ca-certificates:/usr/share/ca-certificates
 
   run:
     image: gradle/example
@@ -183,7 +185,7 @@ services:
      - gradle-cache:/home/gradle/.gradle
      - gradle-cache:/home/gradle/build
      - nodepki-certs-project:/usr/local/share/ca-certificates
-
+     - ca-certificates:/usr/share/ca-certificates
  
 volumes:
   rabbitmq:
@@ -208,5 +210,6 @@ volumes:
   nodepki-certs-project: 
 
   gradle-cache:
+  ca-certificates:
 
   
