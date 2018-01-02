@@ -186,6 +186,13 @@ services:
      - gradle-cache:/home/gradle/build
      - nodepki-certs-project:/usr/local/share/ca-certificates
      - ca-certificates:/usr/share/ca-certificates
+
+  ssl:    
+    build:
+     context: project
+     buildfile: Dockerfile.ssl
+    volumes:
+     - ca-certificates:/usr/share/ca-certificates  
  
 volumes:
   rabbitmq:
