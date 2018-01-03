@@ -32,3 +32,4 @@ deps
 images/
 *.class
 .sts4-cache/
+credentials.py
