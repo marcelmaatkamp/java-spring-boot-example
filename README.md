@@ -105,19 +105,26 @@ $ docker-compose up -d nexus
 
 Goto https://nexus:8443
 
-Add 
- PROXY `jfrog` https://dl.bintray.com/jfrog/jfrog-jars
- PROXY `gradle.plugin` https://plugins.gradle.org/m2/
- 
-GROUP `remote-repos` 
- member `maven-central`
- member `maven-public`
- member `maven-releases`
- member `jfrog`
- 
+## Proxy
+| Name | URL | 
+| ---------| -------- |
+| jfrog | https://dl.bintray.com/jfrog/jfrog-jars   |
+| gradle.plugin   | https://plugins.gradle.org/m2/    | 
 
-Group `gradle.plugins` 
- member `gradle.plugin`
+## GROUP `remote-repos`  
+ 
+| Name | 
+| ---------| 
+| maven-central | 
+| maven-public  | 
+| `maven-releases` |
+| jfrog   |
+
+## GROUP `gradle.plugins`  
+
+| Name | 
+| ---------| 
+| gradle.plugin   | 
  
 Now you can proxy artifacts and plugins in `build.gradle` like this through nexus:
 
