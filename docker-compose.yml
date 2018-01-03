@@ -190,9 +190,18 @@ services:
   ssl:    
     build:
      context: project
-     buildfile: Dockerfile.ssl
+     # buildfile: Dockerfile.ssl
     volumes:
      - ca-certificates:/usr/share/ca-certificates  
+
+  amqp:
+    restart: always
+    image: marcelmaatkamp/steemit-amqp
+    environment:
+     - RABBITMQ_HOSTNAME=rabbitmq
+     - RABBITMQ_EXCHANGE=amq.topic
+    volumes:
+     - ./credentials.py:/app/mycredentials.py
  
 volumes:
   rabbitmq:
