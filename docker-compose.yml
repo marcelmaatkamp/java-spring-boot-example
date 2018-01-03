@@ -186,6 +186,25 @@ services:
      - gradle-cache:/home/gradle/build
      - nodepki-certs-project:/usr/local/share/ca-certificates
      - ca-certificates:/usr/share/ca-certificates
+     
+       couchdb:
+    image: couchdb
+    restart: always
+    volumes:
+      - couch-data:/opt/couchdb/data
+#     - couch-conf:/opt/couchdb/etc
+    logging:
+      options:
+        max-size: 50m
+
+  oracle:
+    image: mritschel/oracle12cr2_base
+    restart: always
+    volumes:
+      - oracle-data:/u01/oracle/oradata
+    logging:
+      options:
+        max-size: 50m
 
   ssl:    
     build:
@@ -227,5 +246,8 @@ volumes:
 
   gradle-cache:
   ca-certificates:
+  
+  couch-data:
+  oracle-data:
 
   

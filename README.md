@@ -105,6 +105,64 @@ $ docker-compose up -d nexus
 
 Goto https://nexus:8443
 
+## Proxy
+| Name | URL | 
+| ---------| -------- |
+| jfrog | https://dl.bintray.com/jfrog/jfrog-jars   |
+| gradle.plugin   | https://plugins.gradle.org/m2/    | 
+
+## GROUP `remote-repos`  
+ 
+| Name | 
+| ---------| 
+| maven-central | 
+| maven-public  | 
+| `maven-releases` |
+| jfrog   |
+
+## GROUP `gradle.plugins`  
+
+| Name | 
+| ---------| 
+| gradle.plugin   | 
+ 
+Now you can proxy artifacts and plugins in `build.gradle` like this through nexus:
+
+```
+buildscript {
+    repositories {
+        maven { url 'https://nexus/repository/remote-repos/' }
+        maven { url 'https://nexus/repository/gradle.plugins/' }
+    }
+
+    dependencies {
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+        classpath "org.codehaus.groovy:groovy-all:2.3.6"
+        classpath "nl.eveoh:gradle-aspectj:1.6"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
+        classpath 'com.bmuschko:gradle-docker-plugin:3.2.1'
+    }
+}
+plugins {
+    id 'org.springframework.boot' version '1.5.9.RELEASE'
+    id "com.bmuschko.nexus" version "2.3.1"
+}
+
+repositories {
+    maven { url 'https://nexus/repository/remote-repos/' }
+}
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-amqp"
+    compile "org.springframework.boot:spring-boot-starter-jetty"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-devtools"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "junit:junit"
+}
+
+```
+
 ## RabbitMQ
 
 ```
