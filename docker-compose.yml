@@ -14,6 +14,7 @@ services:
   socks-proxy:
     # https://github.com/weaveworks/build-tools/blob/master/socks/Dockerfile 
     image: weaveworks/socksproxy
+    restart: always
     ports:
       - 127.0.0.1:9050:8000
     logging:
@@ -218,10 +219,19 @@ services:
     image: marcelmaatkamp/steemit-amqp
     environment:
      - RABBITMQ_HOSTNAME=rabbitmq
-     - RABBITMQ_EXCHANGE=amq.topic
+     - RABBITMQ_EXCHANGE=steemit.api
     volumes:
      - ./credentials.py:/app/mycredentials.py
- 
+
+  neo4j:
+    image: neo4j
+    restart: always
+    volumes:
+     - neo4j-data:/data
+     - neo4j-logs:/logs
+    logging:
+      options:
+        max-size: 50m 
 volumes:
   rabbitmq:
 
@@ -250,4 +260,5 @@ volumes:
   couch-data:
   oracle-data:
 
-  
+  neo4j-data:
+  neo4j-logs:  
